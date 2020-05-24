@@ -1,0 +1,100 @@
+<!-- https://stackoverflow.com/questions/32612690/bootstrap-4-fas-migration 
+	 https://bootsnipp.com/snippets/featured/advanced-dropdown-search
+	 https://www.w3schools.com/bootstrap4/bootstrap_navbar.asp
+-->
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- http://paulund.developpez.com/tutoriels/html/metatag-viewport/ -->
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title> Time use Europe </title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
+	<script type="text/javascript" src="js/d3/d3.js"></script>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<!-- Popper -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+	crossorigin="anonymous"></script>
+</head>
+
+<body onresize="on_body_resize()">
+
+	<div id="side_navbar">
+		
+		<div class="side_navbar_elements">
+			<ul class="nav nav-tabs nav-justified" role="tablist">
+				<li id="time_spent_li" class="active"><a>Time spent</a></li>
+				<!-- <li id="participation_time_li"><a>Participation time</a></li> -->
+			</ul>
+		</div>
+		
+		<div id="div-dropdown-ts" class="container-fluid side_navbar_elements">	
+			
+			<!-- drop down activities -->
+			<div class="row">
+				<div id="graph-col-ts" class="col-md-12">
+					<div id="dropdown-activities-ts" class="dropdown">
+						<button id="button_activity_ts" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+							Choose an activity
+							<span class="caret"></span>
+						</button>
+						<ul id="dropdown-list-ts" class="dropdown-menu"></ul>
+					</div>
+					<div id="activity-graph-ts"></div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="div-dropdown-pt" class="container-fluid side_navbar_elements">
+			
+			<div class="row">
+				<div id="graph-col" class="col-md-12">
+					<div id="dropdown-activities-pt" class="dropdown">
+						<button id="button_activity_pt" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+							Choose an activity
+							<span class="caret"></span>
+						</button>
+						<ul id="dropdown-list-pt" class="dropdown-menu"></ul>
+					</div>
+					<div id="activity-graph-pt"></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+	<div id="page_content">
+		<svg id="map-container">
+			
+	<filter id="blur-filter" x="-1" y="-1" width="200" height="200">
+		<feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+	</filter>
+			</svg>
+	</div>
+	
+	<!-- Project scripts-->
+	<script src="http://d3-legend.susielu.com/d3-legend.min.js"></script>
+	<script src="http://d3js.org/colorbrewer.v1.min.js"></script>	
+	
+		<script src="js/load-carte.js"></script>
+	<script src="js/create_map_pie.js"></script>
+	
+	<script type="text/javascript" src="js/index.js"></script>
+
+	<script type="text/javascript" src="js/ptime-graph.js"></script>
+	<script type="text/javascript" src="js/graph_time_spent.js"></script>
+	
+</body>
+
+</html>
