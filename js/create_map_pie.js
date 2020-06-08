@@ -5,7 +5,7 @@ let scaleC
 let svgMap = d3.select('#map-container')
 let mapContainer = svgMap.append('g').attr('id', 'map')
 let pieContainer = svgMap.append('g').attr('id', 'pies')
-// let legendCOntainer = svgMap.append('g').attr('id', 'legend')
+let legendCOntainer = svgMap.append('g').attr('id', 'legend')
 
 let mapData
 let sTimeList = []

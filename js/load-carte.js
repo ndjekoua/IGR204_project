@@ -36,8 +36,6 @@ d3.csv('data/label.csv', label => {
       }
     }
         	create_list_activities_ts()
-        	create_list_activities_pt()
-        	createNewGRAPHsvg()
 			handle_map_size()
 			loadMap (dataset, "ts")
 			createGrapheTimeSpent(get_checked_activities())
