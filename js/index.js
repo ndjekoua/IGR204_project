@@ -119,42 +119,12 @@ function add_activity_to_selected_activities (activity) {
 
   if (!isInSelectedActivities)
   {
-    add_activity_ts(activity)  
+  add_activity_ts(activity)  
 	createPieMap(get_checked_activities())
 	createGrapheTimeSpent(get_checked_activities())	
 	}
 }
 
-/* create the activities list for participation time */
-function create_list_activities_pt () {
-  var dropdownListPt = d3.select('#dropdown-list-pt')
-  for (let i = 0; i < activities.length; ++i) {
-    dropdownListPt.append('li')
-      .append('a')
-      .property('href', '#')
-      .property('id', i + ' pt')
-      .on('click', on_itemClicked_list_activities_pt)
-      .text(activities[i])
-  }
-}
-
-function on_itemClicked_list_activities_pt () {
-  let id = d3.select(this).attr('id')
-  id = id.split(' ')
-  let activity = activities[id[0]]
-
-  var button = document.getElementById('button_activity_pt')
-
-  var divActivity = '<div style="overflow:hidden" class="col-md-9">' + activity + '</div>'
-  var divCaret = '<div class="col-md-3"></span><span class="caret"></span></div>'
-
-  button.innerHTML = '<div class="row">' + divActivity + divCaret + '</div>'
-  last_activity_pt = activity
-  /* graph participation time / participation rate */
-
-  plotGraphActivity(activity)
-  createPTMap(activity)
-}
 
 function init_index_html () {
   document.getElementById('div-dropdown-pt')

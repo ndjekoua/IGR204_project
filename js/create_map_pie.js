@@ -1,7 +1,8 @@
 let resizeTime = 500
 let colorTime = 1000
 let scaleC
-
+let mapColor = "Greens" //'PuRd'
+let defaultMapColor = '#BDBDBD'
 let svgMap = d3.select('#map-container')
 let mapContainer = svgMap.append('g').attr('id', 'map')
 let pieContainer = svgMap.append('g').attr('id', 'pies')
@@ -30,14 +31,6 @@ function getActivity () {
   return document.getElementById('activities').value
 }
 
-function getColor (d) {
-  if (isNaN(pTime[d.properties.NAME])) {
-    return '#BDBDBD'
-  } else {
-    return scaleC(pTime[d.properties.NAME])
-  }
-}
-
 function getSTColor (d) {
   let val = 0
   let i = 0
@@ -49,35 +42,25 @@ function getSTColor (d) {
   }
 
   if (isNaN(val) || i === sTimeList.length) {
-    return '#BDBDBD'
+    return defaultMapColor
   } else {
     return scaleC(val)
   }
 }
 
-function getParticipationRateMap (activity) {
-  let rateMap = new Map()
-  for (let country of countries) {
-    rateMap[country] = parseFloat(
-      dataset.get(country).get(activity).participationRate
-    )
-  }
-  return rateMap
-}
+// function getParticipationTimeMap (activity) {
+//   console.log('getParticipationTimeMap(): activity:', activity)
+//   let pTimeMap = new Map()
+//   for (let country of countries) {
+//     let str = String(dataset.get(country).get(activity).participationTime)
+//     let splittedStr = str.split(':')
+//     let hh = parseInt(splittedStr[0]),
+//       mm = parseInt(splittedStr[1])
 
-function getParticipationTimeMap (activity) {
-  console.log('getParticipationTimeMap(): activity:', activity)
-  let pTimeMap = new Map()
-  for (let country of countries) {
-    let str = String(dataset.get(country).get(activity).participationTime)
-    let splittedStr = str.split(':')
-    let hh = parseInt(splittedStr[0]),
-      mm = parseInt(splittedStr[1])
-
-    pTimeMap[country] = hh * 60.0 + mm
-  }
-  return pTimeMap
-}
+//     pTimeMap[country] = hh * 60.0 + mm
+//   }
+//   return pTimeMap
+// }
 
 /**
  * This function will process the data for the spent time map.
@@ -148,6 +131,10 @@ function createPieMap (activities) {
     if (mapData == null){
         console.log("Can not get data map!")
         return false
+    }
+
+    if (activities.length <= 1){
+      
     }
 
   //   activities = ['Personal care', 'Other and/or unspecified personal care']
@@ -229,60 +216,64 @@ function createPieMap (activities) {
     .attr('fill', d => getSTColor(d.properties.NAME))
 
   /** ************** Draw pie   ************************/
-
+ if( activities.length > 1){
+ 
+   
   let points = pieContainer
-    .selectAll('.pie')
-    .data(sTimeList, d => d.country)
-    .enter()
-    .append('g')
-    .attr('class', 'pie')
-    .attr('country', d => d.country.replace(" ", "_"))
-    .attr('transform', d => {
+  .selectAll('.pie')
+  .data(sTimeList, d => d.country)
+  .enter()
+  .append('g')
+  .attr('class', 'pie')
+  .attr('country', d => d.country.replace(" ", "_"))
+  .attr('transform', d => {
+    const centroid = path.centroid(d.feature)
+    return `translate(${centroid[0]}, ${centroid[1]})`
+  })
+
+points = pieContainer.selectAll('.pie').data(sTimeList, d => d.country)
+
+  points.transition().duration(500).attr('transform', d => {
       const centroid = path.centroid(d.feature)
       return `translate(${centroid[0]}, ${centroid[1]})`
-    })
-
-  points = pieContainer.selectAll('.pie').data(sTimeList, d => d.country)
-
-    points.transition().duration(500).attr('transform', d => {
-        const centroid = path.centroid(d.feature)
-        return `translate(${centroid[0]}, ${centroid[1]})`
-    })
+  })
 
 
-  let allPies = points.selectAll('.arc').data(d => {
-    d.values.map(t => {
-      t.radius = (0.618 * Math.sqrt(path.area(d.feature))) / 2
-      return d
-    })
-    return pie(d.values)
-  }, d => d.data.activity)
+let allPies = points.selectAll('.arc').data(d => {
+  d.values.map(t => {
+    t.radius = (0.618 * Math.sqrt(path.area(d.feature))) / 2
+    return d
+  })
+  return pie(d.values)
+}, d => d.data.activity)
 
-  let pieArcs = allPies
-    .enter()
-    .append('path')
-    .attr('class', 'arc')
-    .attr('opacity', 1)
-    .attr('fill', d => pieScale(d.data.activity))
+let pieArcs = allPies
+  .enter()
+  .append('path')
+  .attr('class', 'arc')
+  .attr('opacity', 1)
+  .attr('fill', d => pieScale(d.data.activity))
 
-    pieArcs.transition()
-        .duration(500)
-        .attrTween('d', d => arcTween(d, arc))
+  pieArcs.transition()
+      .duration(500)
+      .attrTween('d', d => arcTween(d, arc))
 
-    pieArcs
-        .append('title')
-        .text(d => {
-                return pieTips(d)
-            })
+  pieArcs
+      .append('title')
+      .text(d => {
+              return pieTips(d)
+          })
 allPies
-        .attr('fill', function (d, i) {
-            return pieScale(d.data.activity)
-        })
-        .transition()
-        .duration(500)
-        .attrTween('d', d => arcTween(d, arc))
+      .attr('fill', function (d, i) {
+          return pieScale(d.data.activity)
+      })
+      .transition()
+      .duration(500)
+      .attrTween('d', d => arcTween(d, arc))
 
-  allPies.exit().remove()
+allPies.exit().remove()
+
+ }
 
   let zoom = d3.zoom().scaleExtent([1, 10]).on('zoom', zoomed)
 
@@ -324,31 +315,6 @@ function updateLegend () {
     .call(legend)
 }
 
-function updateMapScale (activity) {
-  pTime = getParticipationTimeMap(activity)
-  pRate = getParticipationRateMap(activity)
-
-  console.log('updateMapScale()', 'Activity', activity, 'pTime', pTime)
-
-  let pTimeList = Object.keys(pTime).map(function (key) {
-    return pTime[key]
-  })
-
-  pTimeList.filter(Boolean)
-  let minPTime = d3.min(pTimeList)
-  let maxPTime = d3.max(pTimeList)
-
-  console.log('updateScale():', 'Get new range:[', minPTime, maxPTime, ']')
-
-  scaleC = d3
-    .scaleThreshold()
-    .domain(
-      d3.range(9).map(function (d) {
-        return minPTime + (d * (maxPTime - minPTime)) / 8
-      })
-    )
-    .range(colorbrewer['Blues'][9])
-}
 
 function updatePieMapScale (activities) {
   getSpentTimeList(activities)
@@ -370,18 +336,7 @@ function updatePieMapScale (activities) {
         return minSTime + (d * (maxSTime - minSTime)) / 8
       })
     )
-    .range(colorbrewer['PuRd'][9])
-}
-
-function pRateTips (d) {
-    console.log("pRateTips", d, pTime[d.properties.NAME])
-  let country = d.properties.NAME
-  if (country in pRate) {
-    return d.properties.NASME + '\nParticipate Rate:\n' + pRate[country] + '%'
-  } else {
-    return d.properties.NAME + '\nParticipate Rate:' + 0
-  }
-  //
+    .range(colorbrewer[mapColor][9])
 }
 
 
@@ -399,101 +354,6 @@ function nbToString (min) {
   return d3.format('02d')(Math.floor(min / 60)) + 'H' + d3.format('02d')(min % 60)
 }
 
-// put all logic in a nice reusable function
-function createPTMap (activity) {
-    let width = $('#page_content').width()
-    let height = $('#page_content').height()
-    svgMap = d3.select('#map-container').attr('width', width).attr('height', height)
-
-  /** Remove all pie chart***/
-  d3.selectAll('.arc')
-    .transition()
-    .duration(colorTime)
-    .attr('opacity', 0)
-    .remove()
-
-  updateMapScale(activity)
-  // use viewBox attributes instead of width + height
-
-  console.log('Create map:' + activity, 'width', width, 'height', height)
-
-  const projection = d3.geoMercator()
-    // d3's 'fitSize' magically sizes and positions the map for you
-    .fitSize([width, height], mapData)
-
-  // this is the function that generates position data from the projection
-  const path = d3.geoPath()
-    .projection(projection)
-
-  // append country outlines
-  let countries_enter = mapContainer.selectAll('.country')
-    .data(mapData.features, d => d.properties.NAME)
-    .enter()
-    .append('g')
-    .attr('class', 'country')
-
-  countries_enter.append('path')
-    .attr('class', 'country_path')
-    .attr('d', path)
-    .attr('country', (d) => d.properties.NAME.replace(" ", "_"))
-    .attr('stroke', 'black')
-    .attr('stroke-width', 1)
-    .attr('fill', d => getColor(d))
-
-
-
-  countries_enter.append('title')
-    .attr('class', 'country_title')
-    .text((d) => pRateTips(d))
-
-  mapContainer.selectAll('.country_path')
-    .data(mapData.features, d => d.properties.NAME)
-      .on("mouseover", function(d,i){
-          d3.selectAll("[country=" + d.properties.NAME.replace(/\s/g,"_") +"]").attr('fill', 'orange')
-      })
-      .on("mouseout", function(d,i){
-          d3.selectAll("path[country=" + d.properties.NAME.replace(/\s/g,"_") +"]")
-          // .select("path")
-              .attr('fill', d => scaleC(pTime[d.properties.NAME.replace(/\s/g,"_")]))
-
-          d3.selectAll("circle[country=" + d.properties.NAME.replace(/\s/g,"_") +"]")
-          // .select("path")
-              .attr('fill', 'black')
-
-          d3.selectAll("rect[country=" + d.properties.NAME.replace(/\s/g,"_") +"]")
-          // .select("path")
-              .attr('fill', 'blue')
-      }).transition()
-    .duration(500)
-    .attr('fill', d => getColor(d))
-
-  mapContainer.selectAll('.country_title')
-    .data(mapData.features, d => d.properties.NAME)
-    .text(d => pRateTips(d))
-
-  mapContainer.selectAll('.country')
-    .data(mapData.features, d => d.properties.NAME)
-    .transition()
-    .duration(1000)
-    .attr('fill', d => getColor(d))
-
-  updateLegend()
-
-
-    let zoom = d3.zoom().scaleExtent([1, 10]).on('zoom', zoomed)
-
-    d3.select('#map-container').call(zoom)
-}
-
-function pRateTips(d) {
-  let country = d.properties.NAME
-  if (country in pRate) {
-    return d.properties.NAME + '\nParticipate Rate:' + pRate[country] + '%' + '\nParticipate Time:' + nbToString(pTime[country])
-  } else {
-    return d.properties.NAME + '\nParticipate Rate:' + 0
-  }
-  //
-}
 
 function pieTips (d) {
   return d.data.activity + '\n' + nbToString(d.value)
