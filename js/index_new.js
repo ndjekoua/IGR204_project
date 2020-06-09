@@ -5,7 +5,6 @@ var last_activity_pt = 'Sleep';
 var selectedActivitiesTs = []
  
 var time_spent_li = document.getElementById('time_spent_li')
-// var participation_time_li = document.getElementById('participation_time_li')
 
 window.onload = init_index_html
 
@@ -15,27 +14,11 @@ time_spent_li.addEventListener('click', function () {
 	
 	document.getElementById('div-dropdown-ts')
 		.setAttribute('style' , 'display:block')
-	// document.getElementById('div-dropdown-pt')
-	// 	.setAttribute('style' , 'display:none')
 		
 	createPieMap(get_checked_activities())
 	currentMode = 'ts';
 })
 
-
-// participation_time_li.addEventListener('click', function () {
-//   participation_time_li.setAttribute('class', 'active')
-// 	time_spent_li.classList.remove('active')
-	
-// 	document.getElementById('div-dropdown-ts')
-// 		.setAttribute('style','display:none')
-// 	document.getElementById('div-dropdown-pt')
-// 		.setAttribute('style' , 'display:block')
-// 	on_body_resize()
-//   createPTMap(last_activity_pt)
-// 	plotGraphActivity(last_activity_pt)
-// 	currentMode = 'pt'
-// })
 
 function add_activity_ts (name) {
   var colDiv = '<div style="white-space:nowrap;overflow:hidden" class="col-md-9">' + name + '</div>'
