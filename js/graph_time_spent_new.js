@@ -24,9 +24,8 @@ function createGrapheTimeSpent(Checked_activities) {
 	$("#activity-graph-ts").children().remove();
   var svgWidth = 600;
   var svgHeight = svgWidth * 0.6;
-
+  var last_activity = ""
   var map = new Map();
-
   for (var i = 0; i < countries.length; i++) {
     map.set(countries[i], [0,0]);
   }
@@ -35,9 +34,10 @@ function createGrapheTimeSpent(Checked_activities) {
     for (var i = 0; i < countries.length; i++) {
 	     temp = map.get(countries[i]);
        map.set(countries[i], add(format_liste(dataset.get(countries[i]).get(Checked_activities[j]).timeSpent) , temp) );
+       last_activity = Checked_activities[j]
     }
   }
-
+ 
   var data0=Array.from(map.entries()).sort(function f(L1,L2) {
      return (L2[1][1]+L2[1][0]*60-L1[1][1]-L1[1][0]*60);
   });
@@ -105,6 +105,12 @@ function createGrapheTimeSpent(Checked_activities) {
     .attr("y", d => yscale(d[1]))
     .attr("width", xscale.bandwidth())
     .attr("height", d => (height+margin.top-yscale(d[1])))
-      .append("title").text(d=>{
-          return d[1].toTimeString().split(" ")[0] })
+      
+      d3.select("#activity-graph-ts")
+        .append("text")
+        .attr("x", (svgWidth))             
+        .attr("text-anchor", "middle")  
+        .style("font-size", "28px") 
+        .text("Distribution of time spent on "+last_activity+" per country");
+      
 }
