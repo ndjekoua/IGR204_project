@@ -6,37 +6,37 @@ var last_activity_pt = 'Sleep';
 var selectedActivitiesTs = []
 
 var time_spent_li = document.getElementById('time_spent_li')
-var participation_time_li = document.getElementById('participation_time_li')
+// var participation_time_li = document.getElementById('participation_time_li')
 
 window.onload = init_index_html
 
 time_spent_li.addEventListener('click', function () {
   time_spent_li.setAttribute('class', 'active')
-	participation_time_li.classList.remove('active')
+	// participation_time_li.classList.remove('active')
 	
 	document.getElementById('div-dropdown-ts')
 		.setAttribute('style' , 'display:block')
-	document.getElementById('div-dropdown-pt')
-		.setAttribute('style' , 'display:none')
+	// document.getElementById('div-dropdown-pt')
+	// 	.setAttribute('style' , 'display:none')
 		
 	createPieMap(get_checked_activities())
 	currentMode = 'ts';
 })
 
 
-participation_time_li.addEventListener('click', function () {
-  participation_time_li.setAttribute('class', 'active')
-	time_spent_li.classList.remove('active')
+// participation_time_li.addEventListener('click', function () {
+//   participation_time_li.setAttribute('class', 'active')
+// 	time_spent_li.classList.remove('active')
 	
-	document.getElementById('div-dropdown-ts')
-		.setAttribute('style','display:none')
-	document.getElementById('div-dropdown-pt')
-		.setAttribute('style' , 'display:block')
-	on_body_resize()
-  createPTMap(last_activity_pt)
-	plotGraphActivity(last_activity_pt)
-	currentMode = 'pt'
-})
+// 	document.getElementById('div-dropdown-ts')
+// 		.setAttribute('style','display:none')
+// 	document.getElementById('div-dropdown-pt')
+// 		.setAttribute('style' , 'display:block')
+// 	on_body_resize()
+//   createPTMap(last_activity_pt)
+// 	plotGraphActivity(last_activity_pt)
+// 	currentMode = 'pt'
+// })
 
 function add_activity_ts (name) {
   var colDiv = '<div style="white-space:nowrap;overflow:hidden" class="col-md-9">' + name + '</div>'
@@ -127,14 +127,14 @@ function add_activity_to_selected_activities (activity) {
 
 
 function init_index_html () {
-  document.getElementById('div-dropdown-pt')
+  document.getElementById('div-dropdown-ts')
     .setAttribute('style', 'display:none')
 
   add_activity_to_selected_activities('Sleep')
   handle_map_size()
 	
   var activity = 'Sleep'
-  var button = document.getElementById('button_activity_pt')
+  var button = document.getElementById('button_activity_ts')
 
   var divActivity = '<div style="overflow:hidden" class="col-md-9">' + activity + '</div>'
   var divCaret = '<div class="col-md-3"></span><span class="caret"></span></div>'
