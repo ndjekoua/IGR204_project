@@ -1,11 +1,9 @@
 var currentMode = 'ts';
-
 var last_activity_pt = 'Sleep';
 
 /* selectected activities fro time spent */
 var selectedActivitiesTs = []
  
-//TEST
 var time_spent_li = document.getElementById('time_spent_li')
 // var participation_time_li = document.getElementById('participation_time_li')
 
@@ -17,8 +15,8 @@ time_spent_li.addEventListener('click', function () {
 	
 	document.getElementById('div-dropdown-ts')
 		.setAttribute('style' , 'display:block')
-	document.getElementById('div-dropdown-pt')
-		.setAttribute('style' , 'display:none')
+	// document.getElementById('div-dropdown-pt')
+	// 	.setAttribute('style' , 'display:none')
 		
 	createPieMap(get_checked_activities())
 	currentMode = 'ts';
@@ -121,21 +119,21 @@ function add_activity_to_selected_activities (activity) {
   if (!isInSelectedActivities)
   {
   add_activity_ts(activity)  
-	// createPieMap(get_checked_activities())
+	createPieMap(get_checked_activities())
 	createGrapheTimeSpent(get_checked_activities())	
 	}
 }
 
 
 function init_index_html () {
-  document.getElementById('div-dropdown-pt')
-    .setAttribute('style', 'display:none')
+  document.getElementById('div-dropdown-ts')
+    // .setAttribute('style', 'display:none')
 
   add_activity_to_selected_activities('Sleep')
   handle_map_size()
 	
   var activity = 'Sleep'
-  var button = document.getElementById('button_activity_pt')
+  var button = document.getElementById('button_activity_ts')
 
   var divActivity = '<div style="overflow:hidden" class="col-md-9">' + activity + '</div>'
   var divCaret = '<div class="col-md-3"></span><span class="caret"></span></div>'
@@ -152,7 +150,7 @@ function handle_map_size () {
 		$('#map-container').attr('height', height)
 	} else {
     $('#map-container').attr('width', width)
-		$('#map-container').attr('height', width)
+		$('#map-container').attr('height', height)
 		$('#map-container').children().first().attr('width', width)
 		var diff = height - width
 		$('#map-container').attr('style', 'margin-top:' + (diff / 2) + ';margin-bottom:' + (diff / 2))
