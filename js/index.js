@@ -4,7 +4,8 @@ var last_activity_pt = 'Sleep';
 
 /* selectected activities fro time spent */
 var selectedActivitiesTs = []
-
+ 
+//TEST
 var time_spent_li = document.getElementById('time_spent_li')
 // var participation_time_li = document.getElementById('participation_time_li')
 
@@ -12,12 +13,12 @@ window.onload = init_index_html
 
 time_spent_li.addEventListener('click', function () {
   time_spent_li.setAttribute('class', 'active')
-	// participation_time_li.classList.remove('active')
+	participation_time_li.classList.remove('active')
 	
 	document.getElementById('div-dropdown-ts')
 		.setAttribute('style' , 'display:block')
-	// document.getElementById('div-dropdown-pt')
-	// 	.setAttribute('style' , 'display:none')
+	document.getElementById('div-dropdown-pt')
+		.setAttribute('style' , 'display:none')
 		
 	createPieMap(get_checked_activities())
 	currentMode = 'ts';
@@ -120,21 +121,21 @@ function add_activity_to_selected_activities (activity) {
   if (!isInSelectedActivities)
   {
   add_activity_ts(activity)  
-	createPieMap(get_checked_activities())
+	// createPieMap(get_checked_activities())
 	createGrapheTimeSpent(get_checked_activities())	
 	}
 }
 
 
 function init_index_html () {
-  document.getElementById('div-dropdown-ts')
+  document.getElementById('div-dropdown-pt')
     .setAttribute('style', 'display:none')
 
   add_activity_to_selected_activities('Sleep')
   handle_map_size()
 	
   var activity = 'Sleep'
-  var button = document.getElementById('button_activity_ts')
+  var button = document.getElementById('button_activity_pt')
 
   var divActivity = '<div style="overflow:hidden" class="col-md-9">' + activity + '</div>'
   var divCaret = '<div class="col-md-3"></span><span class="caret"></span></div>'
