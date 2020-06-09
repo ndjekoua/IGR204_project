@@ -126,16 +126,13 @@ function add_activity_to_selected_activities (activity) {
 
 
 function init_index_html () {
-  document.getElementById('div-dropdown-ts')
-    // .setAttribute('style', 'display:none')
-
-  add_activity_to_selected_activities('Sleep')
-  handle_map_size()
 	
   var activity = 'Sleep'
   var button = document.getElementById('button_activity_ts')
 
-  var divActivity = '<div style="overflow:hidden" class="col-md-9">' + activity + '</div>'
+  add_activity_to_selected_activities(activity)
+  handle_map_size()
+  var divActivity = '<div style="overflow:hidden" class="col-md-9">' + "Choose an Activity" + '</div>'
   var divCaret = '<div class="col-md-3"></span><span class="caret"></span></div>'
 
   button.innerHTML = '<div class="row">' + divActivity + divCaret + '</div>'

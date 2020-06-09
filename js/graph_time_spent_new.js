@@ -30,7 +30,7 @@ function createGrapheTimeSpent(Checked_activities) {
   for (var i = 0; i < countries.length; i++) {
     map.set(countries[i], [0,0]);
   }
-
+  // console.log("COUNTRY.LENGTH="+countries.length)
   for (var j = 0; j < Checked_activities.length; j++) {
     for (var i = 0; i < countries.length; i++) {
 	     temp = map.get(countries[i]);
@@ -106,6 +106,5 @@ function createGrapheTimeSpent(Checked_activities) {
     .attr("width", xscale.bandwidth())
     .attr("height", d => (height+margin.top-yscale(d[1])))
       .append("title").text(d=>{
-          return d[1].toTimeString().split(" ")[0]
-n  })
+          return d[1].toTimeString().split(" ")[0] })
 }
