@@ -112,7 +112,7 @@ n  })
         .append("text")
         .attr("x", (svgWidth))             
         .attr("text-anchor", "middle")  
-        .style("font-size", "18px") 
+        .style("font-size", "14px") 
         .text("Distribution of time spent on "+last_activity.toLocaleUpperCase()+" per country");
       
 }
