@@ -6,7 +6,7 @@ d3.csv('data/label.csv', label => {
   for (let i = 13; i < 34; i++) {
     countries.push(label[i]['DATASET: Time spent, participation time and participation rate in the main activity by sex and day of the week [tus_00week]'])
   };
-  for (let i = 46; i < 101; i++) {
+  for (let i = 51; i < 106; i++) {
     activities.push(label[i]['DATASET: Time spent, participation time and participation rate in the main activity by sex and day of the week [tus_00week]'])
   };
 
@@ -35,7 +35,7 @@ d3.csv('data/label.csv', label => {
         }
       }
     }
-  
+   console.log(data)
       create_list_activities_ts()
       handle_map_size()
       // console.log(dataset.get("Norway"))
