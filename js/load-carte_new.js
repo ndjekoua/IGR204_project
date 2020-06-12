@@ -2,7 +2,7 @@ let countries = []
 let activities = []
 let dataset = new Map()
 
-d3.csv('data/label.csv', label => {
+d3.csv('data/tus_00week_1_Label.csv', label => {
   for (let i = 13; i < 34; i++) {
     countries.push(label[i]['DATASET: Time spent, participation time and participation rate in the main activity by sex and day of the week [tus_00week]'])
   };
