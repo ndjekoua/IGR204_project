@@ -105,12 +105,14 @@ function createGrapheTimeSpent(Checked_activities) {
     .attr("y", d => yscale(d[1]))
     .attr("width", xscale.bandwidth())
     .attr("height", d => (height+margin.top-yscale(d[1])))
-      
+    .append("title").text(d=>{
+      return d[1].toTimeString().split(" ")[0]
+n  })
       d3.select("#activity-graph-ts")
         .append("text")
         .attr("x", (svgWidth))             
         .attr("text-anchor", "middle")  
-        .style("font-size", "20px") 
-        .text("Distribution of time spent on "+last_activity+" per country");
+        .style("font-size", "18px") 
+        .text("Distribution of time spent on <b> "+last_activity+"</b> per country");
       
 }

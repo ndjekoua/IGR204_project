@@ -20,21 +20,16 @@ d3.csv('data/tus_00week_Label.csv', label => {
   }
 
   d3.csv('data/tus_00week_1_Data.csv', data => {
+    var geo = "";
     for (let i = 0; i < data.length; i++) {
       let l = data[i]
+      geo = l.GEO;
+      if(geo.includes("Germany (until 1990 former territory of the FRG)") == true){
+        l.GEO = "Germany";
+      }
       if ((l.DAYSWEEK === 'All days of the week') && l.ACL00 != "Total") {
-        if(l.CEO=="Germany (until 1990 former territory of the FRG)"){
-          l.GEO = "Germany";
-        }
         if (l.UNIT === 'Time spent (hh:mm)') {
           dataset.get(l.GEO).get(l.ACL00).timeSpent = l.Value
-        }
-        if (l.UNIT === 'Participation time (hh:mm)') {
-          dataset.get(l.GEO).get(l.ACL00).participationTime = l.Value
-        }
-
-        if (l.UNIT === 'Participation rate (%)') {
-          dataset.get(l.GEO).get(l.ACL00).participationRate = l.Value
         }
       }
     }
