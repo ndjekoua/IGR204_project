@@ -2,7 +2,7 @@ let countries = []
 let activities = []
 let dataset = new Map()
 
-d3.csv('data/tus_00week_1_Label.csv', label => {
+d3.csv('data/tus_00week_Label.csv', label => {
   for (let i = 13; i < 34; i++) {
     countries.push(label[i]['DATASET: Time spent, participation time and participation rate in the main activity by sex and day of the week [tus_00week]'])
   };
@@ -22,7 +22,7 @@ d3.csv('data/tus_00week_1_Label.csv', label => {
   d3.csv('data/tus_00week_1_Data.csv', data => {
     for (let i = 0; i < data.length; i++) {
       let l = data[i]
-      if ((l.DAYSWEEK === 'All days of the week') && (l.SEX === 'Total')) {
+      if ((l.DAYSWEEK === 'All days of the week') && l.ACL00 != "Total") {
         if (l.UNIT === 'Time spent (hh:mm)') {
           dataset.get(l.GEO).get(l.ACL00).timeSpent = l.Value
         }

@@ -110,7 +110,7 @@ function createGrapheTimeSpent(Checked_activities) {
         .append("text")
         .attr("x", (svgWidth))             
         .attr("text-anchor", "middle")  
-        .style("font-size", "28px") 
+        .style("font-size", "20px") 
         .text("Distribution of time spent on "+last_activity+" per country");
       
 }
