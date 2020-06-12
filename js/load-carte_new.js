@@ -19,7 +19,7 @@ d3.csv('data/label.csv', label => {
     dataset.set(countries[i], map)
   }
 
-  d3.csv('data/TimeUseData.csv', data => {
+  d3.csv('data/tus_00week_1_Data.csv', data => {
     for (let i = 0; i < data.length; i++) {
       let l = data[i]
       if ((l.DAYSWEEK === 'All days of the week') && (l.SEX === 'Total')) {
