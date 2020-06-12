@@ -27,7 +27,8 @@ d3.csv('data/tus_00week_Label.csv', label => {
       if(geo.includes("Germany (until 1990 former territory of the FRG)") == true){
         l.GEO = "Germany";
       }
-      if ((l.DAYSWEEK === 'All days of the week') && l.ACL00 != "Total") {
+
+      if ((l.DAYSWEEK === 'All days of the week') && l.ACL00 != "Total" && l.SEX=="Total") {
         if (l.UNIT === 'Time spent (hh:mm)') {
           dataset.get(l.GEO).get(l.ACL00).timeSpent = l.Value
         }

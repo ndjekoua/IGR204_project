@@ -113,6 +113,6 @@ n  })
         .attr("x", (svgWidth))             
         .attr("text-anchor", "middle")  
         .style("font-size", "18px") 
-        .text("Distribution of time spent on <b> "+last_activity+"</b> per country");
+        .text("Distribution of time spent on "+last_activity.toLocaleUpperCase()+" per country");
       
 }
