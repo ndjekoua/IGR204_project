@@ -23,6 +23,9 @@ d3.csv('data/tus_00week_Label.csv', label => {
     for (let i = 0; i < data.length; i++) {
       let l = data[i]
       if ((l.DAYSWEEK === 'All days of the week') && l.ACL00 != "Total") {
+        if(l.CEO=="Germany (until 1990 former territory of the FRG)"){
+          l.GEO = "Germany";
+        }
         if (l.UNIT === 'Time spent (hh:mm)') {
           dataset.get(l.GEO).get(l.ACL00).timeSpent = l.Value
         }
