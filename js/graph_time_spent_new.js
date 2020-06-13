@@ -113,6 +113,6 @@ n  })
         .attr("x", (svgWidth))             
         .attr("text-anchor", "middle")  
         .style("font-size", "14px") 
-        .text("Distribution of time spent on "+last_activity.toLocaleUpperCase()+" per country");
+        .text("Cumulative time spent on all selected activities per country");
       
 }
